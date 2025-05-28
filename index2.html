@@ -44,12 +44,6 @@
                         <p>Kartenglücksspiel</p>
                         <div class="game-preview">♠A ♥K<br>♣7 ♦Q<br>BJ:21</div>
                     </div>
-                    
-                    <div class="game-card" onclick="loadGame('chess')">
-                        <h3>> SCHACH</h3>
-                        <p>Strategisches Brettspiel</p>
-                        <div class="game-preview">♜ ♞ ♝ ♛ ♚<br>♟ ♟ ♟ ♟ ♟<br>...<br>♙ ♙ ♙ ♙ ♙<br>♖ ♘ ♗ ♕ ♔</div>
-                    </div>
                 </div>
                 
                 <div id="game-container">
@@ -140,24 +134,6 @@
         </div>
     </template>
 
-    <template id="chess-template">
-        <div class="game-area">
-            <h2>> SCHACH</h2>
-            <div class="player-info">
-                <span id="chess-player">AKTUELLER SPIELER: WEISS</span>
-                <span id="chess-status">STATUS: LAUFT</span>
-            </div>
-            <div class="chess-board" id="chess-board">
-                <!-- Schachbrett wird dynamisch erstellt -->
-            </div>
-            <div class="chess-controls">
-                <button class="game-btn" onclick="resetChess()">NEUES SPIEL</button>
-                <button class="game-btn" onclick="undoMove()">ZUG ZURÜCK</button>
-            </div>
-            <div class="move-history" id="move-history"></div>
-        </div>
-    </template>
-
     <script>
         // Matrix-Effekt
         const canvas = document.createElement('canvas');
@@ -218,7 +194,6 @@
             if(game === 'tictactoe') initTTT();
             if(game === 'connectfour') initCF();
             if(game === 'blackjack') initBJ();
-            if(game === 'chess') initChess();
         }
 
         // 3 Gewinnt Logik
@@ -598,343 +573,49 @@
         function resetBJ() {
             startNewBJGame();
         }
-
-        // Schach Logik
-        let chessBoard = [];
-        let currentChessPlayer = 'white';
-        let selectedPiece = null;
-        let validMoves = [];
-        let moveHistory = [];
-        let chessGameActive = true;
-
-        function initChess() {
-            createChessBoard();
-            setupChessPieces();
-            renderChessBoard();
-            
-            document.getElementById('chess-player').textContent = `AKTUELLER SPIELER: ${currentChessPlayer.toUpperCase()}`;
-            document.getElementById('chess-status').textContent = `STATUS: LAUFT`;
+    </script>
+    <style>
+        /* Stile für Blackjack-Karten */
+        .bj-card {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background-color: rgba(0, 20, 0, 0.3);
+            border: 1px solid #0f0;
+            min-width: 40px;
+            text-align: center;
         }
-
-        function createChessBoard() {
-            const boardElement = document.getElementById('chess-board');
-            boardElement.innerHTML = '';
-            
-            for(let row = 0; row < 8; row++) {
-                chessBoard[row] = [];
-                for(let col = 0; col < 8; col++) {
-                    const cell = document.createElement('div');
-                    cell.className = `chess-cell ${(row + col) % 2 === 0 ? 'light' : 'dark'}`;
-                    cell.dataset.row = row;
-                    cell.dataset.col = col;
-                    cell.addEventListener('click', () => handleChessClick(row, col));
-                    
-                    boardElement.appendChild(cell);
-                    chessBoard[row][col] = null;
-                }
-            }
-        }
-
-        function setupChessPieces() {
-            // Weiße Figuren
-            chessBoard[0][0] = { type: 'rook', color: 'white', symbol: '♖' };
-            chessBoard[0][1] = { type: 'knight', color: 'white', symbol: '♘' };
-            chessBoard[0][2] = { type: 'bishop', color: 'white', symbol: '♗' };
-            chessBoard[0][3] = { type: 'queen', color: 'white', symbol: '♕' };
-            chessBoard[0][4] = { type: 'king', color: 'white', symbol: '♔' };
-            chessBoard[0][5] = { type: 'bishop', color: 'white', symbol: '♗' };
-            chessBoard[0][6] = { type: 'knight', color: 'white', symbol: '♘' };
-            chessBoard[0][7] = { type: 'rook', color: 'white', symbol: '♖' };
-            
-            for(let col = 0; col < 8; col++) {
-                chessBoard[1][col] = { type: 'pawn', color: 'white', symbol: '♙' };
+        
+        /* Responsive Anpassungen */
+        @media (max-width: 768px) {
+            .game-selection {
+                grid-template-columns: 1fr;
             }
             
-            // Schwarze Figuren
-            chessBoard[7][0] = { type: 'rook', color: 'black', symbol: '♜' };
-            chessBoard[7][1] = { type: 'knight', color: 'black', symbol: '♞' };
-            chessBoard[7][2] = { type: 'bishop', color: 'black', symbol: '♝' };
-            chessBoard[7][3] = { type: 'queen', color: 'black', symbol: '♛' };
-            chessBoard[7][4] = { type: 'king', color: 'black', symbol: '♚' };
-            chessBoard[7][5] = { type: 'bishop', color: 'black', symbol: '♝' };
-            chessBoard[7][6] = { type: 'knight', color: 'black', symbol: '♞' };
-            chessBoard[7][7] = { type: 'rook', color: 'black', symbol: '♜' };
-            
-            for(let col = 0; col < 8; col++) {
-                chessBoard[6][col] = { type: 'pawn', color: 'black', symbol: '♟' };
-            }
-        }
-
-        function renderChessBoard() {
-            const cells = document.querySelectorAll('.chess-cell');
-            cells.forEach(cell => {
-                const row = parseInt(cell.dataset.row);
-                const col = parseInt(cell.dataset.col);
-                
-                // Clear cell
-                cell.innerHTML = '';
-                cell.classList.remove('selected', 'valid-move');
-                
-                // Add piece if exists
-                const piece = chessBoard[row][col];
-                if(piece) {
-                    const pieceElement = document.createElement('div');
-                    pieceElement.className = `chess-piece ${piece.color}`;
-                    pieceElement.textContent = piece.symbol;
-                    cell.appendChild(pieceElement);
-                }
-            });
-            
-            // Highlight selected piece and valid moves
-            if(selectedPiece) {
-                const { row, col } = selectedPiece;
-                const cell = document.querySelector(`.chess-cell[data-row="${row}"][data-col="${col}"]`);
-                cell.classList.add('selected');
-                
-                validMoves.forEach(move => {
-                    const moveCell = document.querySelector(`.chess-cell[data-row="${move.row}"][data-col="${move.col}"]`);
-                    moveCell.classList.add('valid-move');
-                });
+            .ttt-grid {
+                width: 240px;
             }
             
-            // Update move history
-            updateMoveHistory();
-        }
-
-        function handleChessClick(row, col) {
-            if(!chessGameActive) return;
-            
-            const piece = chessBoard[row][col];
-            
-            // Wenn bereits eine Figur ausgewählt ist
-            if(selectedPiece) {
-                // Prüfen, ob der Zug gültig ist
-                const isValidMove = validMoves.some(move => move.row === row && move.col === col);
-                
-                if(isValidMove) {
-                    // Zug ausführen
-                    makeMove(selectedPiece.row, selectedPiece.col, row, col);
-                }
-                
-                // Auswahl zurücksetzen
-                selectedPiece = null;
-                validMoves = [];
-                renderChessBoard();
-                return;
+            .cell {
+                width: 80px;
+                height: 80px;
             }
             
-            // Wenn keine Figur ausgewählt ist, aber auf eine eigene Figur geklickt wurde
-            if(piece && piece.color === currentChessPlayer) {
-                selectedPiece = { row, col };
-                validMoves = calculateValidMoves(row, col);
-                renderChessBoard();
-            }
-        }
-
-        function calculateValidMoves(row, col) {
-            const piece = chessBoard[row][col];
-            if(!piece) return [];
-            
-            const moves = [];
-            
-            switch(piece.type) {
-                case 'pawn':
-                    // Bauernzüge (vereinfacht, ohne En Passant und Umwandlung)
-                    const direction = piece.color === 'white' ? 1 : -1;
-                    
-                    // Ein Feld vorwärts
-                    if(isInBounds(row + direction, col) && !chessBoard[row + direction][col]) {
-                        moves.push({ row: row + direction, col });
-                        
-                        // Zwei Felder vorwärts von der Startposition
-                        if((piece.color === 'white' && row === 1) || (piece.color === 'black' && row === 6)) {
-                            if(!chessBoard[row + 2 * direction][col]) {
-                                moves.push({ row: row + 2 * direction, col });
-                            }
-                        }
-                    }
-                    
-                    // Schlagzüge
-                    for(let dc of [-1, 1]) {
-                        const newCol = col + dc;
-                        if(isInBounds(row + direction, newCol)) {
-                            const targetPiece = chessBoard[row + direction][newCol];
-                            if(targetPiece && targetPiece.color !== piece.color) {
-                                moves.push({ row: row + direction, col: newCol });
-                            }
-                        }
-                    }
-                    break;
-                    
-                case 'rook':
-                    // Turmzüge (horizontal und vertikal)
-                    addStraightMoves(row, col, moves, piece.color);
-                    break;
-                    
-                case 'knight':
-                    // Springerzüge (L-Form)
-                    const knightMoves = [
-                        { dr: 2, dc: 1 }, { dr: 2, dc: -1 },
-                        { dr: -2, dc: 1 }, { dr: -2, dc: -1 },
-                        { dr: 1, dc: 2 }, { dr: 1, dc: -2 },
-                        { dr: -1, dc: 2 }, { dr: -1, dc: -2 }
-                    ];
-                    
-                    knightMoves.forEach(move => {
-                        const newRow = row + move.dr;
-                        const newCol = col + move.dc;
-                        
-                        if(isInBounds(newRow, newCol)) {
-                            const targetPiece = chessBoard[newRow][newCol];
-                            if(!targetPiece || targetPiece.color !== piece.color) {
-                                moves.push({ row: newRow, col: newCol });
-                            }
-                        }
-                    });
-                    break;
-                    
-                case 'bishop':
-                    // Läuferzüge (diagonal)
-                    addDiagonalMoves(row, col, moves, piece.color);
-                    break;
-                    
-                case 'queen':
-                    // Damenzüge (horizontal, vertikal und diagonal)
-                    addStraightMoves(row, col, moves, piece.color);
-                    addDiagonalMoves(row, col, moves, piece.color);
-                    break;
-                    
-                case 'king':
-                    // Königszüge (ein Feld in alle Richtungen)
-                    for(let dr = -1; dr <= 1; dr++) {
-                        for(let dc = -1; dc <= 1; dc++) {
-                            if(dr === 0 && dc === 0) continue;
-                            
-                            const newRow = row + dr;
-                            const newCol = col + dc;
-                            
-                            if(isInBounds(newRow, newCol)) {
-                                const targetPiece = chessBoard[newRow][newCol];
-                                if(!targetPiece || targetPiece.color !== piece.color) {
-                                    moves.push({ row: newRow, col: newCol });
-                                }
-                            }
-                        }
-                    }
-                    break;
+            .cf-cell {
+                width: 30px;
+                height: 30px;
             }
             
-            return moves;
-        }
-
-        function addStraightMoves(row, col, moves, color) {
-            const directions = [
-                { dr: 1, dc: 0 },  // nach unten
-                { dr: -1, dc: 0 },  // nach oben
-                { dr: 0, dc: 1 },   // nach rechts
-                { dr: 0, dc: -1 }    // nach links
-            ];
-            
-            directions.forEach(dir => {
-                for(let i = 1; i < 8; i++) {
-                    const newRow = row + i * dir.dr;
-                    const newCol = col + i * dir.dc;
-                    
-                    if(!isInBounds(newRow, newCol)) break;
-                    
-                    const targetPiece = chessBoard[newRow][newCol];
-                    
-                    if(!targetPiece) {
-                        moves.push({ row: newRow, col: newCol });
-                    } else {
-                        if(targetPiece.color !== color) {
-                            moves.push({ row: newRow, col: newCol });
-                        }
-                        break;
-                    }
-                }
-            });
-        }
-
-        function addDiagonalMoves(row, col, moves, color) {
-            const directions = [
-                { dr: 1, dc: 1 },    // unten rechts
-                { dr: 1, dc: -1 },   // unten links
-                { dr: -1, dc: 1 },   // oben rechts
-                { dr: -1, dc: -1 }   // oben links
-            ];
-            
-            directions.forEach(dir => {
-                for(let i = 1; i < 8; i++) {
-                    const newRow = row + i * dir.dr;
-                    const newCol = col + i * dir.dc;
-                    
-                    if(!isInBounds(newRow, newCol)) break;
-                    
-                    const targetPiece = chessBoard[newRow][newCol];
-                    
-                    if(!targetPiece) {
-                        moves.push({ row: newRow, col: newCol });
-                    } else {
-                        if(targetPiece.color !== color) {
-                            moves.push({ row: newRow, col: newCol });
-                        }
-                        break;
-                    }
-                }
-            });
-        }
-
-        function isInBounds(row, col) {
-            return row >= 0 && row < 8 && col >= 0 && col < 8;
-        }
-
-        function makeMove(fromRow, fromCol, toRow, toCol) {
-            // Zug speichern für Rückgängig-Funktion
-            moveHistory.push({
-                from: { row: fromRow, col: fromCol, piece: chessBoard[fromRow][fromCol] },
-                to: { row: toRow, col: toCol, piece: chessBoard[toRow][toCol] }
-            });
-            
-            // Zug ausführen
-            chessBoard[toRow][toCol] = chessBoard[fromRow][fromCol];
-            chessBoard[fromRow][fromCol] = null;
-            
-            // Spieler wechseln
-            currentChessPlayer = currentChessPlayer === 'white' ? 'black' : 'white';
-            document.getElementById('chess-player').textContent = `AKTUELLER SPIELER: ${currentChessPlayer.toUpperCase()}`;
-            
-            // Prüfen auf Schachmatt oder Patt (vereinfacht)
-            checkGameStatus();
-        }
-
-        function checkGameStatus() {
-            // Vereinfachte Prüfung: Wenn der König geschlagen wurde
-            let whiteKingExists = false;
-            let blackKingExists = false;
-            
-            for(let row = 0; row < 8; row++) {
-                for(let col = 0; col < 8; col++) {
-                    const piece = chessBoard[row][col];
-                    if(piece && piece.type === 'king') {
-                        if(piece.color === 'white') whiteKingExists = true;
-                        if(piece.color === 'black') blackKingExists = true;
-                    }
-                }
+            .bj-controls {
+                flex-direction: column;
             }
             
-            if(!whiteKingExists) {
-                document.getElementById('chess-status').textContent = `STATUS: SCHWARZ GEWINNT!`;
-                chessGameActive = false;
-            } else if(!blackKingExists) {
-                document.getElementById('chess-status').textContent = `STATUS: WEISS GEWINNT!`;
-                chessGameActive = false;
+            .bj-card {
+                padding: 5px;
+                min-width: 30px;
+                font-size: 0.8em;
             }
         }
-
-        function updateMoveHistory() {
-            const historyElement = document.getElementById('move-history');
-            historyElement.innerHTML = '<h3>ZUGVERLAUF:</h3>';
-            
-            if(moveHistory.length === 0) {
-                historyElement.innerHTML += '<p
+    </style>
+</body>
+</html>
