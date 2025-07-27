@@ -1,340 +1,210 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYM_TERMINAL | WORKOUT_DATA</title>
-    <link rel="stylesheet" href="CSS/gym.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GYM_TERMINAL | Powerbuilding Trainingsplan</title>
+    <link rel="stylesheet" href="CSS/gym.css" />
+    <style>
+        /* Zusätzliche Styles für besseren Lesefluss */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: #111;
+            padding: 2rem;
+            border-radius: 8px;
+            color: #eee;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        h1, h2, h3, h4 {
+            color: #39ff14; /* Matrix-Grün */
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        ul {
+            margin-left: 1.5rem;
+        }
+        pre {
+            background: #222;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table, th, td {
+            border: 1px solid #39ff14;
+        }
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .tag {
+            color: #39ff14;
+            font-weight: bold;
+        }
+        /* Scrollbar für Codeblöcke */
+        pre::-webkit-scrollbar {
+            height: 8px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background: #39ff14;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
     <div class="matrix-effect" id="matrix"></div>
     
     <header>
-        <h1>// GYM_TERMINAL v2.0 [WORKOUT_DATA]</h1>
+        <h1>// GYM_TERMINAL v2.0 [POWERBUILDING TRAININGSPLAN]</h1>
     </header>
     
     <main class="main-content">
-        <div class="terminal-container">
-            <div class="terminal-header">
-                <h2>> WORKOUT_PROTOKOLL // <span id="current-date"></span></h2>
-                <div class="terminal-controls">
-                    <span class="control close" title="Close"></span>
-                    <span class="control minimize" title="Minimize"></span>
-                    <span class="control maximize" title="Maximize"></span>
-                </div>
-            </div>
+        <section>
+            <h2>✅ Trainingsüberblick</h2>
+            <ul>
+                <li><strong>Split:</strong> 6 Tage pro Woche (Push/Pull/Legs x 2)</li>
+                <li><strong>Ziel:</strong> Maximale Muskel- & Kraftentwicklung (Hypertrophie + Powerlifting)</li>
+                <li><strong>Dauer pro Einheit:</strong> 60–90 Minuten</li>
+                <li><strong>Fokus:</strong> Progressive Überlastung, Reizvariation, Technik- & Muskeloptimierung</li>
+                <li><strong>Wiederholungsbereiche:</strong>
+                    <ul>
+                        <li>Hauptlifts: 3–6 Wdh @70–90%</li>
+                        <li>Hypertrophie: 6–15 Wdh</li>
+                        <li>Isolationsübungen: 10–20 Wdh</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>📅 Wochen-Split (Push/Pull/Legs)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Schwerpunkt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Mo</td><td>Push (Kraft: Bankdrücken schwer)</td></tr>
+                    <tr><td>Di</td><td>Pull (Kraft: Kreuzheben schwer)</td></tr>
+                    <tr><td>Mi</td><td>Beine (Kraft: Kniebeuge schwer)</td></tr>
+                    <tr><td>Do</td><td>Push (Hypertrophie)</td></tr>
+                    <tr><td>Fr</td><td>Pull (Hypertrophie)</td></tr>
+                    <tr><td>Sa</td><td>Beine (Hypertrophie)</td></tr>
+                    <tr><td>So</td><td>Ruhetag</td></tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section>
+            <h2>🧠 Wissenschaftlich fundierte Prinzipien</h2>
+            <ul>
+                <li><strong>Volumen:</strong> 10–20 Sätze/Woche/Muskel (nach Brad Schoenfeld, 2016)</li>
+                <li><strong>Frequenz:</strong> 2x/Woche/Muskelgruppe ist optimal (Schoenfeld 2019)</li>
+                <li><strong>Intensität:</strong> Schweres Training (70–90% 1RM) plus moderates Volumen für Hypertrophie (Helms et al.)</li>
+                <li><strong>RIR/RPE:</strong> 0–2 Reps in Reserve (bei Grundübungen), 1–3 bei Assistenzübungen</li>
+                <li><strong>Variation:</strong> Übungen alle 4–6 Wochen leicht variieren für neue Reize</li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>🏋️‍♂️ Woche – Beispiel (Woche 1–4)</h2>
             
-            <div class="terminal-body">
-                <div class="command-line">
-                    <span class="prompt">></span>
-                    <span class="command blink">WORKOUT_DATA_ANALYSE...</span>
-                </div>
-                
-                <div class="workout-section">
-                    <h3>> PUSH_DAY // 78min</h3>
-                    
-                    <div class="exercise">
-                        <h4>> Bankdrücken <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">55kg ×7 4 5 6 7 7 8 9</div>
-                            <div class="set">60kg ×3 4 5 5</div>
-                            <div class="set">62.5kg ×6 2 3 3 3 4 4</div>
-                            <div class="set">65kg ×6 3 3 3 4 4 4</div>
-                            <div class="set">67.5kg ×5 3 3 3 3 3</div>
-                            <div class="set highlight">= X</div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise">
-                        <h4>> Schrägbankdrücken KH <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">10kg</div>
-                            <div class="set">12kg</div>
-                            <div class="set">14kg ×3 7 8 9</div>
-                            <div class="set">16kg ×3 5 6 8</div>
-                            <div class="set">18kg ×7 7 8 9 9 10 10 10</div>
-                            <div class="set">20kg ×8 4 5 6 7 8 8 8 9</div>
-                            <div class="set">22kg ×12 4 4 5 6 7 7 7 6 7 7 7 8</div>
-                            <div class="set">24kg ×11 4 5 6 7 7 7 7 7 4 4 4 (zu schwach)</div>
-                            <div class="set">22kg ×2 6 6</div>
-                            <div class="set">24kg ×7 4 5 6 7 7 7 8</div>
-                            <div class="set">26kg ×5 4 5 5 5 6</div>
-                            <div class="set highlight">= X</div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise">
-                        <h4>> Flys <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">15kg ×3</div>
-                            <div class="set">17.5kg ×3 6 7 9 9</div>
-                            <div class="set">20kg ×11 6 7 7 8 8 9 9 9 9 10 11</div>
-                            <div class="set note">Richtige Ausführung</div>
-                            <div class="set">17.5kg ×1 8</div>
-                            <div class="set">20kg ×5 5 6 7 8 9</div>
-                            <div class="set">22.5kg ×10 5 6 7 8 8 9 9 10 10 11</div>
-                            <div class="set">25kg ×8 5 6 7 8 8 8 9 10</div>
-                            <div class="set">27.5kg ×8 5 6 6 7 7 7 8 8</div>
-                            <div class="set">30kg ×10 4 5 6 6 7 7 8 8 8 9</div>
-                            <div class="set">32.5kg ×2 4 4</div>
-                        </div>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Schulterpresse <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">20kg ×5 0 0 0 0 7</div>
-                            <div class="set">25kg ×4 5 6 7 8</div>
-                            <div class="set note">Nicht besser geworden oder Triceps zu schwach (27.5kg ×8 7 8 8 9 9 9 9 9)</div>
-                            <div class="set">25kg ×4 6 7 8 9</div>
-                            <div class="set">27.5kg ×6 4 5 6 7 8 9</div>
-                            <div class="set">30kg ×8 4 5 6 6 7 7 8 9</div>
-                            <div class="set">32.5kg ×13 4 5 6 7 7 7 8 9 9 9 9 7[T] 10</div>
-                            <div class="set">35kg ×12 4 4 5 5 6 7 7 8 9 9 10 11</div>
-                            <div class="set">37.5kg ×0</div>
-                        </div>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Seitheben <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">6kg ×2</div>
-                            <div class="set">7kg ×2 7 8</div>
-                            <div class="set">8kg ×2 7 8</div>
-                            <div class="set">9kg ×6 6 7 9 11 12 12</div>
-                            <div class="set">10kg ×9 6 7 8 9 10 11 11 12 12</div>
-                            <div class="set">12kg ×10 4 5 6 6 7 7 8 8 9 9</div>
-                            <div class="set">10kg ×10 6 7 7 8 0 0 0 7 8 9</div>
-                            <div class="set">12kg ×17 5 6 6 6 6 7 7 4[r] 7 7 5 6 6 8 8 8 9</div>
-                        </div>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Triceps Extensions <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">12.5kg ×1 9</div>
-                            <div class="set">15kg ×1 8</div>
-                            <div class="set">17.5kg ×1 7</div>
-                            <div class="set">20kg ×1 8</div>
-                            <div class="set">22.5kg ×4 7 8 9 10</div>
-                            <div class="set">25kg ×8 5 6 7 8 9 10 11 11</div>
-                            <div class="set">27.5kg ×4 5 6 7 8</div>
-                            <div class="set">30kg ×5 5 6 7 8 9</div>
-                            <div class="set">32.5kg ×1 5</div>
-                            <div class="set note">Nicht richtig ausgeführt</div>
-                            <div class="set">25kg ×6 6 7 7 8 8 9</div>
-                            <div class="set">27.5kg ×7 5 6 6 7 7 7 8</div>
-                            <div class="set">30kg ×5 5 6 6 6 7</div>
-                            <div class="set">32.5kg ×4 5 6 6 7</div>
-                            <div class="set note">Keine Zeit ×11</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="workout-section">
-                    <h3>> PULL_DAY // 84min</h3>
-                    <div class="exercise">
-                        <h4>> Klimmzüge <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">0kg ×15</div>
-                            <div class="set">6kg ×7 4 5 6 7 7 8 8</div>
-                            <div class="set">8kg ×6 4 5 6 7 8 9</div>
-                            <div class="set">10kg ×4 6 7 8 9</div>
-                            <div class="set">12kg ×6 4 5 6 6 7 7</div>
-                            <div class="set">15kg ×4 4 5 5 6</div>
-                            <div class="set">20kg ×8 3 3 4 4 4 5 5 6</div>
-                            <div class="set">21.25kg ×6 3 4 4 5 5 5</div>
-                        </div>
-                    </div>
-                    
-                    <div class="exercise">
-                        <h4>> Rows <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">12.5kg x3 5 6 7</div>
-                            <div class="set">15kg x3 5 6 7</div>
-                            <div class="set">17.5kg x4 4 5 6 7</div>
-                            <div class="set">20kg x4 4 5 6 7</div>
-                            <div class="set">21.25kg x3 4 5 5</div>
-                        </div>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Reverse Flys <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-<div class="set">20kg x2 6 7</div>
-<div class="set">22.5kg x3 4 5 7</div>
-<div class="set">25kg x3 3 4 4</div>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Lat pulldown <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">25kg</div>
-                            <div class="set">30kg </div>
-                            <div class="set">35kg x2</div>
-                            <div class="set">40kg x3 6 7 8</div>
-                            <div class="set">45kg x4 6 7 8 8</div>
-                            <div class="set">50kg x9 5 6 6 6 7 8 8 9 8</div>
-                            <div class="set">55kg x8 4 5 6 7 7 7 8 9</div>
-                            <div class="set">60kg x7 4 5 5 6 4 6 6 </div>
-                            <div class="set">65kg x7 3 4 4 4 3 4 4</div>
-                            <div class="set">62.5kg x3 4 4 5</div>
-                            <div class="set">63.75kg x3 4 4 5</div>
-                            <div class="set">65kg x4 3 4 5 5</div>
-                            <div class="set">66.25kg x4 3 4 4 4</div>
-
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Biceps curls <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">20kg x4</div>
-                            <div class="set">25kg x10 4 5 5 6 7 7 8 9 10 11 </div>
-                            <div class="set">30kg x21 3 3 4 4 5 5 5 6 6 7 7 7 8 8 8 8 9 9 10 10 11</div>
-                            <div class="set">35kg x21 3 4 4 5 5 3 4 4 4 5 5 6 6 6 7 7 7 6 8 8 9</div>
-                            <div class="set">37.5kg x2 5 5</div>
-                    </div>
-
-                    <div class="exercise">
-                        <h4>> Hammer Curls<span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            
-                            <div class="set">8kg</div>
-                            <div class="set">9kg</div>
-                            <div class="set">10kg x2</div>
-                            <div class="set">12kg x3 7 8 9</div>
-                            <div class="set">14kg x8 5 6 7 7 8 8 10 11</div>
-                            <div class="set">16kg x13 5 6 6 7 7 8 8 8 9 9 10 10 11 </div>
-                            <div class="set">18kg x10 6 7 8 8 8 8 9 10 10 11</div>
-                            <div class="set">20kg x7 5 6 7 7 8 8 9</div>
-                            <div class="set">22kg x12 5 6 6 6 7 7 8 8 8 9 9</div>
-                            <div class="set">24kg x3 4 4 5</div>
-                    </div>
-
-                </div>
-                
-                <div class="workout-section">
-                    <h3>> LEG_DAY // 54min</h3>
-                    <div class="exercise">
-                        <h4>> Squats <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">60kg ×2 7 8</div>
-                            <div class="set">70kg ×5 4 5 6 8 9</div>
-                            <div class="set">80kg ×11 4 5 5 6 6 7 7 8 8 9 9</div>
-                            <div class="set">85kg ×7 4 5 0 0 0 4 4</div>
-                            <div class="set">90kg ×3 4 4 5</div>
-                            <div class="set">92.5kg ×3 2 2 3</div>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="exercise">
-                        <h4>> Leg Curl <span class="tag">2 SETZE</span></h4>
-                        <div class="set-grid">
-                            <div class="set">32kg ×1 10</div>
-                            <div class="set">36kg ×2 7 9</div>
-                            <div class="set">45kg ×4 6 8 8 9</div>
-                            <div class="set">50kg ×10 5 5 6 6 6 7 8 6 8 9</div>
-                            <div class="set">54kg ×6 5 6 7 8 8 9</div>
-                            <div class="set">59kg ×12 4 5 5 5 5 5 6 6 6 7 2 2</div>
-                            <div class="set">65kg ×2 6 7</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h3>Montag – Push Heavy</h3>
+            <ul>
+                <li>Bankdrücken (Langhantel): 4×4–6 @80–85%</li>
+                <li>Overhead Press (stehend): 3×6–8</li>
+                <li>Schrägbankdrücken (Kurzhantel): 3×8–10</li>
+                <li>Dips (addiert/gewichtet): 3×8–10</li>
+                <li>French Press: 3×12–15</li>
+            </ul>
             
-            <div class="terminal-footer">
-                <p class="blink">>> SYSTEM_AKTIV [DATEN_GESPEICHERT]</p>
-            </div>
-        </div>
+            <h3>Dienstag – Pull Heavy</h3>
+            <ul>
+                <li>Kreuzheben: 4×3–5 @82–88%</li>
+                <li>Klimmzüge (gewichtet oder strikt): 3×6–8</li>
+                <li>T-Bar Row: 3×8–10</li>
+                <li>Langhantel-Rudern (Yates Row): 3×10</li>
+                <li>Face Pulls: 3×15–20</li>
+                <li>Curls (Langhantel): 3×10–12</li>
+            </ul>
+            
+            <h3>Mittwoch – Beine Heavy</h3>
+            <ul>
+                <li>Kniebeuge (Low Bar): 4×4–6 @80–85%</li>
+                <li>Beinpresse (schwer): 3×8</li>
+                <li>Rum. Kreuzheben (RDLs): 3×8</li>
+                <li>Beinbeuger Maschine: 3×10–12</li>
+                <li>Wadenheben stehend: 3×12–15</li>
+            </ul>
+            
+            <h3>Donnerstag – Push Hypertrophie</h3>
+            <ul>
+                <li>Schrägbankdrücken (Maschine/Kabel): 4×10–12</li>
+                <li>Kurzhantel-Schulterdrücken: 3×10</li>
+                <li>Brustfliegende (Kabel): 3×12–15</li>
+                <li>Seitheben: 3×15–20</li>
+                <li>Trizeps Pushdowns: 3×15–20</li>
+                <li>Overhead-Extensions: 2×15–20</li>
+            </ul>
+            
+            <h3>Freitag – Pull Hypertrophie</h3>
+            <ul>
+                <li>Latzug eng/supiniert: 4×10–12</li>
+                <li>Rudern am Kabel: 3×12</li>
+                <li>Rear Delt Raises: 3×15</li>
+                <li>Shrugs: 3×15</li>
+                <li>Konzentrationscurl: 3×15</li>
+                <li>Preacher Curls (SZ): 2×15–20</li>
+            </ul>
+            
+            <h3>Samstag – Beine Hypertrophie</h3>
+            <ul>
+                <li>Frontkniebeuge oder Hackenschmidt: 4×10</li>
+                <li>Bulgarian Split Squats: 3×12</li>
+                <li>Beinbeuger liegend: 3×12–15</li>
+                <li>Glute Bridges / Hip Thrusts: 3×10</li>
+                <li>Wadenheben sitzend: 3×20</li>
+                <li>Planks / Hanging Leg Raises: 3 Sätze</li>
+            </ul>
+            
+            <h3>Sonntag – Ruhetag</h3>
+            <p>Aktive Regeneration, Mobilität, leichtes Cardio, Stretching</p>
+        </section>
+        
+        <section>
+            <h2>⚙️ Progression & Tipps</h2>
+            <ul>
+                <li>Wöchentlich +2,5–5 kg bei Grundübungen, wenn sauber ausgeführt</li>
+                <li>Assistenzübungen: +1–2 Wiederholungen bis oberes Limit, dann Gewicht erhöhen</li>
+                <li>RPE-Autoregulation (7–9) möglich, auf Tagesform achten</li>
+                <li>Deload alle 4–6 Wochen bei Bedarf (-30–50% Volumen & Intensität)</li>
+                <li>Übungen alle 4–6 Wochen leicht variieren für neue Wachstumsreize</li>
+            </ul>
+        </section>
     </main>
     
     <footer>
-        <p>> SYSTEM_ZEIT: <span id="time"></span> | © 2024 GYM_TERMINAL</p>
-        <div class="nav-links">
-            <a href="index.html">> HOME</a>
-            <a href="stats.html">> STATISTIK</a>
-            <a href="plans.html">> PLÄNE</a>
-        </div>
+        <p>© 2025 GYM_TERMINAL - Created with AI</p>
     </footer>
-
-    <script>
-        // Set current date
-        const now = new Date();
-        document.getElementById('current-date').textContent = now.toLocaleDateString('de-DE');
-        
-        // Matrix effect
-        const canvas = document.createElement('canvas');
-        canvas.className = 'matrix-effect';
-        document.body.appendChild(canvas);
-        
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const chars = "01";
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-        
-        for(let i = 0; i < columns; i++) {
-            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
-        }
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#0f0';
-            ctx.font = fontSize + 'px monospace';
-            
-            for(let i = 0; i < drops.length; i++) {
-                const text = chars.charAt(Math.floor(Math.random() * chars.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                
-                drops[i]++;
-            }
-        }
-        
-        setInterval(drawMatrix, 33);
-        
-        // Update time
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('time').textContent = now.toLocaleTimeString('de-DE');
-        }
-        
-        setInterval(updateTime, 1000);
-        updateTime();
-        
-        // Cycle commands
-        const commandText = document.querySelector('.command');
-        const commands = [
-            "WORKOUT_DATEN_ANALYSIERT",
-            "FORTCHRITT_BEWERTET",
-            "LEISTUNG_TRACKING",
-            "NÄCHSTE_ZIELE_BERECHNET",
-            "SYSTEM_BEREIT"
-        ];
-        
-        let currentCommand = 0;
-        
-        function cycleCommands() {
-            commandText.textContent = commands[currentCommand];
-            currentCommand = (currentCommand + 1) % commands.length;
-        }
-        
-        setInterval(cycleCommands, 2000);
-        
-        // Responsive adjustments
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
+    
+    <script src="JS/matrix.js"></script>
 </body>
 </html>
